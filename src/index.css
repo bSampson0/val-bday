@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --arcade-dark: #1A0533;
+  --arcade-mid: #2D1054;
+  --arcade-deep: #0D021F;
+  --candy-pink: #FF6EB4;
+  --candy-yellow: #FFD700;
+  --candy-blue: #5BC0EB;
+  --candy-green: #58D68D;
+  --candy-red: #FF3366;
+  --candy-purple: #9B59B6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--arcade-dark);
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--arcade-dark); }
+::-webkit-scrollbar-thumb {
+  background: var(--candy-pink);
+  border-radius: 4px;
+  box-shadow: 0 0 8px var(--candy-pink);
+}
+
+/* ── CRT Scanline overlay ── */
+.scanlines {
+  position: relative;
+}
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* ── CRT vignette ── */
+.crt-vignette {
+  position: relative;
+}
+.crt-vignette::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Pixel border ── */
+.pixel-border {
+  border: 3px solid var(--candy-pink);
+  box-shadow:
+    0 0 0 3px var(--arcade-dark),
+    0 0 0 6px var(--candy-pink),
+    0 0 20px rgba(255, 110, 180, 0.4),
+    inset 0 0 20px rgba(255, 110, 180, 0.05);
+}
+
+.pixel-border-yellow {
+  border: 3px solid var(--candy-yellow);
+  box-shadow:
+    0 0 0 3px var(--arcade-dark),
+    0 0 0 6px var(--candy-yellow),
+    0 0 20px rgba(255, 215, 0, 0.4),
+    inset 0 0 20px rgba(255, 215, 0, 0.05);
+}
+
+.pixel-border-blue {
+  border: 3px solid var(--candy-blue);
+  box-shadow:
+    0 0 0 3px var(--arcade-dark),
+    0 0 0 6px var(--candy-blue),
+    0 0 20px rgba(91, 192, 235, 0.4);
+}
+
+/* ── Neon text ── */
+.neon-text-pink {
+  color: var(--candy-pink);
+  text-shadow:
+    0 0 7px var(--candy-pink),
+    0 0 14px var(--candy-pink),
+    0 0 28px rgba(255, 110, 180, 0.5);
+}
+
+.neon-text-yellow {
+  color: var(--candy-yellow);
+  text-shadow:
+    0 0 7px var(--candy-yellow),
+    0 0 14px var(--candy-yellow),
+    0 0 28px rgba(255, 215, 0, 0.5);
+}
+
+.neon-text-blue {
+  color: var(--candy-blue);
+  text-shadow:
+    0 0 7px var(--candy-blue),
+    0 0 14px var(--candy-blue),
+    0 0 28px rgba(91, 192, 235, 0.5);
+}
+
+/* ── Shimmer gradient text ── */
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--candy-pink),
+    var(--candy-yellow),
+    var(--candy-blue),
+    var(--candy-green),
+    var(--candy-pink)
+  );
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ── Cursor particle ── */
+.cursor-particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+/* ── Candy progress bar segments ── */
+.progress-segment {
+  height: 100%;
+  border-right: 2px solid rgba(0,0,0,0.3);
+  flex-shrink: 0;
+}
+
+/* ── Balloon string ── */
+.balloon-string {
+  stroke-dasharray: 4;
+  stroke-dashoffset: 0;
+}
+
+/* ── Loading text flicker ── */
+@keyframes flicker {
+  0%, 98%, 100% { opacity: 1; }
+  99% { opacity: 0.8; }
+}
+.flicker {
+  animation: flicker 4s infinite;
+}
+
+/* ── Coin shine ── */
+@keyframes coinShine {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.4); }
+}
+.coin-shine {
+  animation: coinShine 1.5s ease-in-out infinite;
+}
+
+/* ── Star twinkle ── */
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.7); }
+}
