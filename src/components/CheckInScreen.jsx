@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { gsap } from 'gsap';
 import { useCheckIn } from '../hooks/useCheckIn';
 import { playCoin, playLevelUp } from '../lib/sounds';
@@ -152,11 +152,22 @@ function SuccessScreen({ name, guestNumber, onReset }) {
 export default function CheckInScreen() {
   const [name, setName] = useState('');
   const [shake, setShake] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const { checkIn, status, guestNumber, error, reset } = useCheckIn();
   const buttonRef = useRef(null);
   const coinBurstRef = useRef(null);
   const confettiRef = useRef(null);
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+  const isInView = useInView(sectionRef, { amount: 0.3 });
+
+  // Only load video when section is visible
+  useEffect(() => {
+    if (isInView && videoRef.current && !videoReady) {
+      videoRef.current.play().catch(() => {});
+      setVideoReady(true);
+    }
+  }, [isInView, videoReady]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -178,20 +189,21 @@ export default function CheckInScreen() {
       ref={sectionRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Animated video background */}
+      {/* Animated video background - lazy loaded */}
       <div className="absolute inset-0">
         <video
-          autoPlay
+          ref={videoRef}
           muted
           loop
           playsInline
           className="w-full h-full object-cover"
-          style={{ opacity: 0.3 }}
+          style={{ opacity: 0.25, willChange: 'opacity' }}
           onError={(e) => { e.target.style.display = 'none'; }}
+          preload="none"
         >
           <source src="/assets/candy-world.mp4" type="video/mp4" />
         </video>
-        {/* Fallback gradient */}
+        {/* Fallback gradient - simpler and faster */}
         <div
           className="absolute inset-0"
           style={{
@@ -200,10 +212,10 @@ export default function CheckInScreen() {
         />
       </div>
 
-      {/* Dark overlay */}
+      {/* Dark overlay - simplified, no blur */}
       <div
         className="absolute inset-0"
-        style={{ background: 'rgba(13,2,31,0.6)', backdropFilter: 'blur(2px)' }}
+        style={{ background: 'rgba(13,2,31,0.7)' }}
       />
 
       {/* Coin burst layer */}

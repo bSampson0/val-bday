@@ -15,7 +15,7 @@ function CoinSVG({ size = 28 }) {
 const CoinBurst = forwardRef(function CoinBurst({ originRef }, ref) {
   const coinRefs = useRef([]);
   const containerRef = useRef(null);
-  const COUNT = 14;
+  const COUNT = 10;
 
   useImperativeHandle(ref, () => ({
     burst() {
