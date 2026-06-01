@@ -1,10 +1,16 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, memo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import LoadingScreen from './components/LoadingScreen';
 import HeroSection from './components/HeroSection';
 import PartyInfo from './components/PartyInfo';
 import CheckInScreen from './components/CheckInScreen';
 import CursorSparkle from './components/CursorSparkle';
+
+// Memoize components to prevent unnecessary re-renders
+const MemoizedHeroSection = memo(HeroSection);
+const MemoizedPartyInfo = memo(PartyInfo);
+const MemoizedCheckInScreen = memo(CheckInScreen);
+const MemoizedCursorSparkle = memo(CursorSparkle);
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
@@ -21,7 +27,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen" style={{ background: '#1A0533' }}>
       {/* Global cursor sparkle effect */}
-      <CursorSparkle />
+      <MemoizedCursorSparkle />
 
       {/* Loading screen overlay */}
       <AnimatePresence>
@@ -37,15 +43,15 @@ export default function App() {
             transition={{ duration: 0.6 }}
           >
             {/* Section 1: Hero */}
-            <HeroSection onScrollToInfo={scrollToInfo} />
+            <MemoizedHeroSection onScrollToInfo={scrollToInfo} />
 
             {/* Section 2: Party Info */}
             <div ref={infoRef}>
-              <PartyInfo />
+              <MemoizedPartyInfo />
             </div>
 
             {/* Section 3: Check-in */}
-            <CheckInScreen />
+            <MemoizedCheckInScreen />
 
             {/* Footer */}
             <footer

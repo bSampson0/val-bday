@@ -15,10 +15,11 @@ function createParticle(container) {
   el.style.userSelect = 'none';
   el.style.zIndex = '5';
   el.style.opacity = '0';
+  el.style.willChange = 'transform, opacity';
   container.appendChild(el);
 
-  const duration = 6 + Math.random() * 8;
-  const drift = (Math.random() - 0.5) * 120;
+  const duration = 5 + Math.random() * 6;
+  const drift = (Math.random() - 0.5) * 100;
 
   gsap.fromTo(
     el,
@@ -26,12 +27,12 @@ function createParticle(container) {
     {
       y: `${window.innerHeight + 100}px`,
       x: drift,
-      rotation: (Math.random() - 0.5) * 720,
-      opacity: 0.8,
+      rotation: (Math.random() - 0.5) * 540,
+      opacity: 0.7,
       scale: 1,
       duration,
       ease: 'none',
-      delay: Math.random() * 4,
+      delay: Math.random() * 3,
       onComplete: () => {
         el.remove();
         createParticle(container);
@@ -40,13 +41,14 @@ function createParticle(container) {
   );
 }
 
-export default function FloatingParticles({ count = 25 }) {
+export default function FloatingParticles({ count = 12 }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
     const container = containerRef.current;
+    if (!container) return;
     for (let i = 0; i < count; i++) {
-      setTimeout(() => createParticle(container), i * 200);
+      setTimeout(() => createParticle(container), i * 300);
     }
   }, [count]);
 

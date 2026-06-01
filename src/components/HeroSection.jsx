@@ -52,7 +52,7 @@ export default function HeroSection({ onScrollToInfo }) {
       <CandyClouds />
 
       {/* Floating candy particles */}
-      <FloatingParticles count={20} />
+      <FloatingParticles count={10} />
 
       {/* Balloons */}
       <FloatingBalloons />

@@ -62,7 +62,7 @@ export default function LoadingScreen({ onComplete }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[1000] flex flex-col items-center justify-center scanlines crt-vignette overflow-hidden"
+      className="fixed inset-0 z-[1000] flex flex-col items-center justify-center scanlines crt-vignette overflow-hidden pt-12"
       style={{
         background: 'radial-gradient(ellipse at center, #2D1054 0%, #1A0533 50%, #0D021F 100%)',
       }}

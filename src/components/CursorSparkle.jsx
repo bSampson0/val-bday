@@ -10,11 +10,15 @@ export default function CursorSparkle() {
     let lastY = 0;
     let frameId;
     let moveCount = 0;
+    let particleCount = 0;
+    const MAX_PARTICLES = 15; // Limit max active particles
 
     const onMouseMove = (e) => {
       moveCount++;
-      // Throttle: only spawn every 3rd event
-      if (moveCount % 3 !== 0) return;
+      // Throttle: only spawn every 5th event (reduced from 3rd)
+      if (moveCount % 5 !== 0) return;
+      // Don't create if too many particles active
+      if (particleCount >= MAX_PARTICLES) return;
 
       const dx = e.clientX - lastX;
       const dy = e.clientY - lastY;
@@ -23,6 +27,7 @@ export default function CursorSparkle() {
       lastX = e.clientX;
       lastY = e.clientY;
 
+      particleCount++;
       const el = document.createElement('div');
       el.className = 'cursor-particle';
       el.textContent = SHAPES[Math.floor(Math.random() * SHAPES.length)];
@@ -35,6 +40,7 @@ export default function CursorSparkle() {
       el.style.position = 'fixed';
       el.style.zIndex = '9999';
       el.style.transform = 'translate(-50%, -50%)';
+      el.style.willChange = 'transform, opacity';
       document.body.appendChild(el);
 
       gsap.to(el, {
@@ -42,9 +48,12 @@ export default function CursorSparkle() {
         x: (Math.random() - 0.5) * 40,
         opacity: 0,
         scale: 0.3,
-        duration: 0.7 + Math.random() * 0.3,
+        duration: 0.6,
         ease: 'power2.out',
-        onComplete: () => el.remove(),
+        onComplete: () => {
+          el.remove();
+          particleCount--;
+        },
       });
     };
 
