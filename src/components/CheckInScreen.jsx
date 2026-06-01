@@ -223,14 +223,8 @@ export default function CheckInScreen() {
       <ConfettiOverlay ref={confettiRef} />
 
       <div className="relative z-10 w-full max-w-lg mx-auto px-6 py-16">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10"
-        >
+        {/* Header (static) */}
+        <div className="text-center mb-10">
           <p className="font-pixel text-xs tracking-widest mb-3" style={{ color: '#9B59B6' }}>
             ★ PLAYER REGISTRATION ★
           </p>
@@ -245,12 +239,8 @@ export default function CheckInScreen() {
           </h2>
         </motion.div>
 
-        {/* Main card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        {/* Main card (static) */}
+        <div
           className="relative p-8 scanlines"
           style={{
             background: 'rgba(13,2,31,0.92)',
@@ -266,24 +256,16 @@ export default function CheckInScreen() {
                 guestNumber={guestNumber}
                 onReset={() => { reset(); setName(''); }}
               />
-            ) : (
-              <motion.div key="form" initial={{ opacity: 1 }} exit={{ opacity: 0, scale: 0.95 }}>
-                {/* Game controller icon */}
-                <div
-                  className="text-5xl text-center mb-6 animate-float"
-                  style={{ filter: 'drop-shadow(0 0 10px rgba(255,110,180,0.6))' }}
-                >
-                  🎮
-                </div>
-
+              ) : (
+              <div key="form">
                 <form onSubmit={handleSubmit}>
                   {/* Input label */}
                   <label className="block font-pixel text-xs mb-3 tracking-wide" style={{ color: '#A8EDEA' }}>
                     ENTER YOUR NAME, PLAYER 1:
                   </label>
 
-                  {/* Input field */}
-                  <motion.div animate={shake ? SHAKE : {}}>
+                  {/* Input field (static, simple visual feedback on empty submit) */}
+                  <div>
                     <input
                       type="text"
                       value={name}
@@ -295,18 +277,22 @@ export default function CheckInScreen() {
                       style={{
                         background: '#0D021F',
                         color: '#fff',
-                        border: '3px solid #FF6EB4',
-                        boxShadow: '0 0 15px rgba(255,110,180,0.3), inset 0 0 10px rgba(255,110,180,0.05)',
+                        border: '3px solid ' + (shake ? '#FF3366' : '#FF6EB4'),
+                        boxShadow: shake
+                          ? '0 0 0 3px rgba(255,51,102,0.15), inset 0 0 10px rgba(255,110,180,0.05)'
+                          : '0 0 15px rgba(255,110,180,0.3), inset 0 0 10px rgba(255,110,180,0.05)',
                         caretColor: '#FF6EB4',
                       }}
                       onFocus={(e) => {
                         e.target.style.boxShadow = '0 0 25px rgba(255,110,180,0.6), inset 0 0 15px rgba(255,110,180,0.1)';
                       }}
                       onBlur={(e) => {
-                        e.target.style.boxShadow = '0 0 15px rgba(255,110,180,0.3), inset 0 0 10px rgba(255,110,180,0.05)';
+                        e.target.style.boxShadow = shake
+                          ? '0 0 0 3px rgba(255,51,102,0.15), inset 0 0 10px rgba(255,110,180,0.05)'
+                          : '0 0 15px rgba(255,110,180,0.3), inset 0 0 10px rgba(255,110,180,0.05)';
                       }}
                     />
-                  </motion.div>
+                  </div>
 
                   {/* Error message */}
                   <AnimatePresence>
@@ -324,19 +310,13 @@ export default function CheckInScreen() {
                   </AnimatePresence>
 
                   {/* PRESS START button */}
-                  <motion.button
+                  <button
                     ref={buttonRef}
                     type="submit"
                     disabled={status === 'submitting'}
-                    animate={status !== 'submitting' ? { y: [0, -8, 0] } : {}}
-                    transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.95, y: 4 }}
-                    className="w-full font-pixel py-5 text-sm tracking-widest disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full font-pixel py-5 text-sm tracking-widest disabled:opacity-70 disabled:cursor-not-allowed transform transition-transform duration-150 hover:scale-105 active:scale-95"
                     style={{
-                      background: status === 'submitting'
-                        ? '#9B59B6'
-                        : 'linear-gradient(135deg, #FF3366, #FF6EB4)',
+                      background: status === 'submitting' ? '#9B59B6' : 'linear-gradient(135deg, #FF3366, #FF6EB4)',
                       color: '#fff',
                       border: 'none',
                       cursor: status === 'submitting' ? 'wait' : 'pointer',
@@ -347,7 +327,7 @@ export default function CheckInScreen() {
                     }}
                   >
                     {status === 'submitting' ? '⏳ LOADING...' : '▶ PRESS START ◀'}
-                  </motion.button>
+                  </button>
                 </form>
 
                 {/* Hint */}
@@ -362,17 +342,12 @@ export default function CheckInScreen() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Decorative candy strip */}
+        {/* Decorative candy strip (static) */}
         <div className="flex justify-center gap-3 mt-6">
           {['🍭', '🍬', '🍫', '🍡', '🍭', '🍬', '🍫'].map((c, i) => (
-            <motion.span
-              key={i}
-              className="text-xl"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 + i * 0.2, delay: i * 0.1 }}
-            >
+            <span key={i} className="text-xl">
               {c}
-            </motion.span>
+            </span>
           ))}
         </div>
       </div>
