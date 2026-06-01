@@ -237,7 +237,7 @@ export default function CheckInScreen() {
           >
             Check In!
           </h2>
-        </motion.div>
+        </div>
 
         {/* Main card (static) */}
         <div
@@ -337,10 +337,10 @@ export default function CheckInScreen() {
                 >
                   PRESS START TO JOIN THE ADVENTURE!
                 </p>
-              </motion.div>
+              </div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {/* Decorative candy strip (static) */}
         <div className="flex justify-center gap-3 mt-6">
