@@ -13,8 +13,7 @@ export function useGuestList() {
     const fetchGuests = async () => {
       const { data } = await supabase
         .from('guests')
-        .select('name')
-        .order('created_at', { ascending: true });
+        .select('name');
       if (data) setGuests(data.map((g) => g.name));
     };
 
