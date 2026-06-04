@@ -36,13 +36,14 @@ export default function CandyClouds() {
           className="absolute"
           style={{
             top: cloud.top,
-            left: '-20vw',
-            transform: `scale(${cloud.scale})`,
+            left: 0,
             opacity: cloud.opacity,
             animation: `driftRight ${cloud.duration} linear ${cloud.delay} infinite`,
           }}
         >
-          <CloudShape color={CLOUD_COLORS[i % CLOUD_COLORS.length]} />
+          <div style={{ transform: `scale(${cloud.scale})` }}>
+            <CloudShape color={CLOUD_COLORS[i % CLOUD_COLORS.length]} />
+          </div>
         </div>
       ))}
     </div>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Spoiler -->
+  <rect x="2" y="11" width="4" height="3" rx="1" fill="#FF6EB4"/>
+  <!-- Car body -->
+  <rect x="4" y="14" width="24" height="9" rx="3" fill="#FF6EB4"/>
+  <!-- Gold racing stripe -->
+  <rect x="4" y="18" width="24" height="2" fill="#FFD700"/>
+  <!-- Cockpit -->
+  <rect x="10" y="10" width="13" height="8" rx="2" fill="#5BC0EB"/>
+  <!-- Windshield glare -->
+  <rect x="12" y="12" width="4" height="3" rx="1" fill="rgba(255,255,255,0.5)"/>
+  <!-- Wheels -->
+  <circle cx="9" cy="23" r="4" fill="#1A0533"/>
+  <circle cx="9" cy="23" r="2" fill="#FFD700"/>
+  <circle cx="23" cy="23" r="4" fill="#1A0533"/>
+  <circle cx="23" cy="23" r="2" fill="#FFD700"/>
+  <!-- Star on body -->
+  <text x="17" y="21" font-size="5" text-anchor="middle" fill="#1A0533">★</text>
+</svg>

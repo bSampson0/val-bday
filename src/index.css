@@ -188,3 +188,9 @@ body {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.3; transform: scale(0.7); }
 }
+
+/* ── Cloud drift ── */
+@keyframes driftRight {
+  from { transform: translateX(-20vw); }
+  to { transform: translateX(120vw); }
+}

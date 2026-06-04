@@ -9,3 +9,4 @@ export const PARTY = {
   // ↓ Set this to the exact party start date/time (ISO format, local time)
   partyDate: '2026-06-27T11:00:00',
 };
+''
