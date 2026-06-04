@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { gsap } from 'gsap';
 import { PARTY } from '../config';
 import { useGuestCount } from '../hooks/useGuestCount';
+import { useGuestList } from '../hooks/useGuestList';
 import { playCoin } from '../lib/sounds';
 
 function InfoCard({ icon, title, value, subvalue, color, delay, borderClass }) {
@@ -70,6 +71,7 @@ export default function PartyInfo() {
   const inView = useInView(sectionRef, { once: true, margin: '-100px' });
   const coinRainFired = useRef(false);
   const guestCount = useGuestCount();
+  const guestList = useGuestList();
 
   useEffect(() => {
     if (inView && !coinRainFired.current) {
@@ -183,6 +185,42 @@ export default function PartyInfo() {
             <InfoCard key={card.title} {...card} delay={i * 0.15} />
           ))}
         </div>
+
+        {/* RSVP roster */}
+        {guestList.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="mt-10 p-6 md:p-8"
+            style={{
+              background: 'rgba(13, 2, 31, 0.85)',
+              backdropFilter: 'blur(8px)',
+              border: '2px solid #9B59B6',
+              boxShadow: '0 0 20px rgba(155,89,182,0.3)',
+            }}
+          >
+            <p className="font-pixel text-xs tracking-widest mb-6" style={{ color: '#9B59B6' }}>
+              ★ PARTY ROSTER ★
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {guestList.map((name, i) => (
+                <motion.div
+                  key={name}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="flex items-center gap-2"
+                >
+                  <span className="font-pixel text-xs shrink-0" style={{ color: '#FFD700' }}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="font-body text-sm text-white truncate">{name}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* Bottom CTA */}
         <motion.div
