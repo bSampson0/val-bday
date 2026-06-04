@@ -186,6 +186,42 @@ export default function PartyInfo() {
           ))}
         </div>
 
+        {/* Gift note */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.55, duration: 0.6 }}
+          className="mt-6 p-6 text-center"
+          style={{
+            background: 'rgba(13, 2, 31, 0.85)',
+            backdropFilter: 'blur(8px)',
+            border: '2px solid #FFD700',
+            boxShadow: '0 0 15px rgba(255,215,0,0.2)',
+          }}
+        >
+          <p className="font-body text-white mb-3" style={{ fontSize: '1rem', lineHeight: 1.6 }}>
+            🎁 {PARTY.giftNote}{' '}
+            <a
+              href={PARTY.venmo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-pixel text-xs px-3 py-1 inline-block"
+              style={{
+                background: '#008CFF',
+                color: '#fff',
+                boxShadow: '0 3px 0 #0060CC',
+                textDecoration: 'none',
+                verticalAlign: 'middle',
+              }}
+            >
+              💙 VENMO @bnice
+            </a>
+          </p>
+          <p className="font-body text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
+            📚 {PARTY.bookExchange}
+          </p>
+        </motion.div>
+
         {/* RSVP roster */}
         {guestList.length > 0 && (
           <motion.div
